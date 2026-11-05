@@ -1,14 +1,329 @@
-        <!-- 新遊戲卡片：複製並修改下方內容 -->
-        <div class="game-card" data-title="請輸入遊戲名稱" data-author="請輸入學生姓名">
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>陳主任的 Vibe Coding - 學生網頁遊戲精選</title>
+    <!-- 引入 Google 字型與 FontAwesome 圖標 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+            --accent-color: #ff5a79;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent; /* 移除 iPad 點擊高亮藍色框 */
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 10px;
+        }
+
+        .logo-area {
+            display: inline-block;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        h1 i {
+            color: #f39c12;
+        }
+
+        p.subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* 搜尋框設計 */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+            font-size: 18px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid transparent;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
+        }
+
+        /* 遊戲網格 */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        /* 遊戲卡片 */
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* iPad 觸控時的縮放反饋 */
+        .game-card:active {
+            transform: scale(0.98);
+        }
+
+        /* 電腦上滑過效果 */
+        @media (hover: hover) {
+            .game-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            }
+        }
+
+        .game-icon-wrapper {
+            height: 140px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* 為不同遊戲設定不同背景色 */
+        .game-card:nth-child(2n) .game-icon-wrapper {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+        }
+        .game-card:nth-child(3n) .game-icon-wrapper {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .game-icon-wrapper i {
+            font-size: 60px;
+            color: white;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .game-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .student-author {
+            font-size: 13px;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* 按鈕設計：加大尺寸，方便觸控 */
+        .btn-play {
+            margin-top: auto;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-play:active {
+            background: #357abd;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        /* 無搜尋結果提示 */
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 16px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1><i class="fa-solid fa-gamepad"></i> 陳主任的 Vibe Coding 遊戲廣場</h1>
+            <p class="subtitle">用 iPad 點擊下方卡片，立刻遊玩同學們製作的精彩網頁遊戲！</p>
+        </div>
+    </header>
+
+    <!-- 快速搜尋過濾 -->
+    <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" class="search-bar" placeholder="搜尋學生名字或遊戲名稱...">
+    </div>
+
+    <!-- 遊戲卡片清單 -->
+    <div class="game-grid" id="gameGrid">
+        
+        <!-- 遊戲 1 -->
+        <div class="game-card" data-title="文明六代碼" data-author="楊愷濶 YANG KAIRUN">
             <div class="game-icon-wrapper">
-                <!-- 您可以更換 fa-gamepad 成其他 FontAwesome 圖標，例如 fa-rocket(火箭)、fa-car(賽車) -->
-                <i class="fa-solid fa-gamepad"></i> 
+                <i class="fa-solid fa-landmark"></i>
             </div>
             <div class="game-info">
-                <span class="student-author"><i class="fa-solid fa-user"></i> 請輸入學生姓名</span>
-                <div class="game-title">請輸入遊戲名稱</div>
-                <a href="請貼上學生的遊戲網址" target="_blank" class="btn-play">
+                <span class="student-author"><i class="fa-solid fa-user"></i> 楊愷濶 YANG KAIRUN</span>
+                <div class="game-title">文明六代碼</div>
+                <a href="https://share.gemini.google/ihlv36EOwnAP" target="_blank" class="btn-play">
                     <i class="fa-solid fa-play"></i> 開始遊戲
                 </a>
             </div>
         </div>
+
+        <!-- 遊戲 2 -->
+        <div class="game-card" data-title="軍事安全遊戲1.0" data-author="王文龍 WANG WENLONG">
+            <div class="game-icon-wrapper">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="game-info">
+                <span class="student-author"><i class="fa-solid fa-user"></i> 王文龍 WANG WENLONG</span>
+                <div class="game-title">軍事安全遊戲 1.0</div>
+                <a href="https://share.gemini.google/W3wifnDliipZ" target="_blank" class="btn-play">
+                    <i class="fa-solid fa-play"></i> 開始遊戲
+                </a>
+            </div>
+        </div>
+
+        <!-- 遊戲 3 -->
+        <div class="game-card" data-title="白細胞保衛戰2.0" data-author="王文龍 WANG WENLONG">
+            <div class="game-icon-wrapper">
+                <i class="fa-solid fa-virus-slash"></i>
+            </div>
+            <div class="game-info">
+                <span class="student-author"><i class="fa-solid fa-user"></i> 王文龍 WANG WENLONG</span>
+                <div class="game-title">白細胞保衛戰 2.0</div>
+                <a href="https://share.gemini.google/kq51UAV6vPSW" target="_blank" class="btn-play">
+                    <i class="fa-solid fa-play"></i> 開始遊戲
+                </a>
+            </div>
+        </div>
+
+        <!-- 找不到結果時顯示 -->
+        <div class="no-results" id="noResults">
+            <i class="fa-regular fa-face-frown" style="font-size: 40px; margin-bottom: 10px; display: block;"></i>
+            找不到相符的遊戲，試試看其他關鍵字吧！
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 深水埗街坊福利會小學 - STEAM 程式設計教學推廣</p>
+    </footer>
+
+    <script>
+        // 搜尋過濾功能 JavaScript
+        const searchInput = document.getElementById('searchInput');
+        const gameCards = document.querySelectorAll('.game-card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            const filterValue = this.value.toLowerCase().trim();
+            let hasVisibleCard = false;
+
+            gameCards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const author = card.getAttribute('data-author').toLowerCase();
+
+                if (title.includes(filterValue) || author.includes(filterValue)) {
+                    card.style.display = 'flex';
+                    hasVisibleCard = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // 控制「無搜尋結果」提示的顯示
+            if (hasVisibleCard) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
