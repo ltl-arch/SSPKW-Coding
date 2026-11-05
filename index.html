@@ -101,4 +101,230 @@
         /* 遊戲網格 */
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fil
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        /* 遊戲卡片 */
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* iPad 觸控時的縮放反饋 */
+        .game-card:active {
+            transform: scale(0.98);
+        }
+
+        /* 電腦上滑過效果 */
+        @media (hover: hover) {
+            .game-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            }
+        }
+
+        .game-icon-wrapper {
+            height: 140px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* 卡片漸層顏色分配 */
+        .game-card:nth-child(1) .game-icon-wrapper {
+            background: linear-gradient(135deg, #ff5a79 0%, #ff839d 100%);
+        }
+        .game-card:nth-child(2) .game-icon-wrapper {
+            background: linear-gradient(135deg, #2af598 0%, #009efd 100%);
+        }
+        .game-card:nth-child(3) .game-icon-wrapper {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+        }
+
+        .game-icon-wrapper i {
+            font-size: 60px;
+            color: white;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .game-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .student-author {
+            font-size: 13px;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            min-height: 50px; /* 保持標題高度整齊 */
+        }
+
+        /* 按鈕設計 */
+        .btn-play {
+            margin-top: auto;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-play:active {
+            background: #357abd;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        /* 無搜尋結果提示 */
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 16px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1><i class="fa-solid fa-gamepad"></i> SSPKW Vibe Coding 遊戲廣場</h1>
+            <p class="subtitle">用 iPad 點擊下方卡片，立刻遊玩同學們製作的精彩網頁遊戲！</p>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" class="search-bar" placeholder="搜尋學生名字或遊戲名稱...">
+    </div>
+
+    <!-- 遊戲卡片清單 -->
+    <div class="game-grid" id="gameGrid">
+
+        <!-- 遊戲 1 (陳主任製作) -->
+        <div class="game-card" data-title="模擬城市：深水埗" data-author="陳主任">
+            <div class="game-icon-wrapper">
+                <i class="fa-solid fa-city"></i>
+            </div>
+            <div class="game-info">
+                <span class="student-author" style="color: #ff5a79;"><i class="fa-solid fa-user-tie"></i> 陳主任製作</span>
+                <div class="game-title">模擬城市：深水埗<br><small style="font-weight:normal; font-size:12px; color:#7f8c8d;">(存檔修復終極版)</small></div>
+                <a href="https://sspkw.github.io/LED/sim2.html" target="_blank" class="btn-play" style="background: #ff5a79; box-shadow: 0 4px 10px rgba(255, 90, 121, 0.3);">
+                    <i class="fa-solid fa-play"></i> 開始遊戲
+                </a>
+            </div>
+        </div>
+
+        <!-- 遊戲 2 (4A 巫睿駿) -->
+        <div class="game-card" data-title="大魚吃小魚：海洋進化王" data-author="4A 巫睿駿">
+            <div class="game-icon-wrapper">
+                <i class="fa-solid fa-fish-fins"></i>
+            </div>
+            <div class="game-info">
+                <span class="student-author"><i class="fa-solid fa-user"></i> 4A 巫睿駿</span>
+                <div class="game-title">大魚吃小魚：海洋進化王<br><small style="font-weight:normal; font-size:12px; color:#7f8c8d;">(RK3566 優化版)</small></div>
+                <a href="https://sspkw.github.io/LED/fish.html" target="_blank" class="btn-play">
+                    <i class="fa-solid fa-play"></i> 開始遊戲
+                </a>
+            </div>
+        </div>
+
+        <!-- 遊戲 3 (王文龍) -->
+        <div class="game-card" data-title="白細胞保衛戰2.0" data-author="王文龍 WANG WENLONG">
+            <div class="game-icon-wrapper">
+                <i class="fa-solid fa-virus-slash"></i>
+            </div>
+            <div class="game-info">
+                <span class="student-author"><i class="fa-solid fa-user"></i> 王文龍 WANG WENLONG</span>
+                <div class="game-title">白細胞保衛戰 2.0</div>
+                <a href="https://share.gemini.google/kq51UAV6vPSW" target="_blank" class="btn-play">
+                    <i class="fa-solid fa-play"></i> 開始遊戲
+                </a>
+            </div>
+        </div>
+
+        <!-- 找不到結果時顯示 -->
+        <div class="no-results" id="noResults">
+            <i class="fa-regular fa-face-frown" style="font-size: 40px; margin-bottom: 10px; display: block;"></i>
+            找不到相符的遊戲，試試看其他關鍵字吧！
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 深水埗街坊福利會小學 - STEAM 程式設計教學推廣</p>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const gameCards = document.querySelectorAll('.game-card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            const filterValue = this.value.toLowerCase().trim();
+            let hasVisibleCard = false;
+
+            gameCards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const author = card.getAttribute('data-author').toLowerCase();
+
+                if (title.includes(filterValue) || author.includes(filterValue)) {
+                    card.style.display = 'flex';
+                    hasVisibleCard = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (hasVisibleCard) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
